@@ -11,10 +11,10 @@ class Product(models.Model):
 	product_number	= models.CharField(max_length = 50)
 	description	= models.CharField(max_length = 1000)
 	material	= models.ForeignKey('Material', on_delete = models.SET_NULL, null = True, blank = True)
-	luggage_color	= models.ManyToManyField('LuggageColor', through = 'ProductLuggageColor', null = True, blank = True)
-	tag		= models.ManyToManyField('Tag', through = 'ProductOption', null = True, blank = True)
-	handle		= models.ManyToManyField('Handle', through = 'ProductOption', null = True, blank = True)
-	wheel		= models.ManyToManyField('Wheel', through = 'ProductOption', null = True, blank = True)
+	luggage_color	= models.ManyToManyField('LuggageColor', through = 'ProductLuggageColor')
+	tag		= models.ManyToManyField('Tag', through = 'ProductOption')
+	handle		= models.ManyToManyField('Handle', through = 'ProductOption')
+	wheel		= models.ManyToManyField('Wheel', through = 'ProductOption')
 
 	class Meta:
 		db_table = 'products'
@@ -66,16 +66,16 @@ class Texture(models.Model):
 
 class ProductLuggageColor(models.Model):
 	luggage_color 	= models.ForeignKey('LuggageColor', on_delete = models.SET_NULL, null = True)
-	product 	= models.ForeignKey('Product', on_delete = models.SET_NULL, null = True)
+	product			= models.ForeignKey('Product', on_delete = models.SET_NULL, null = True)
 
 	class Meta:
 		db_table = 'products_luggage_colors'
 
 class ProductOption(models.Model):
-	product 	= models.ForeignKey('Product', on_delete = models.SET_NULL, null = True, blank = True)
-	tag 		= models.ForeignKey('Tag', on_delete = models.SET_NULL, null = True, blank = True)
-	handle 		= models.ForeignKey('Handle', on_delete = models.SET_NULL, null = True, blank = True)
-	wheel 		= models.ForeignKey('Wheel', on_delete = models.SET_NULL, null = True, blank = True)
+	product 	= models.ForeignKey('Product', on_delete = models.SET_NULL, null=True)
+	tag 		= models.ForeignKey('Tag', on_delete = models.SET_NULL, null = True)
+	handle 		= models.ForeignKey('Handle', on_delete = models.SET_NULL, null = True)
+	wheel 		= models.ForeignKey('Wheel', on_delete = models.SET_NULL, null = True)
 
 	class Meta:
 		db_table = 'products_options'
