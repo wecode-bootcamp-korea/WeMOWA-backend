@@ -22,6 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+SECRET_KEY = my_settings.SECRET_KEY['SECRET_KEY']
+DATABASES = my_settings.DATABASES
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -40,6 +42,8 @@ INSTALLED_APPS = [
     'corsheaders',	
 	'account',
 	'order',
+    'product',
+    'store',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +81,7 @@ WSGI_APPLICATION = 'wemowa_main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-}
-DATABASES= my_settings.DATABASES
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -143,4 +146,3 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
 )
 
-SECRET_KEY = my_settings.SECRET_KEY['SECRET_KEY']
