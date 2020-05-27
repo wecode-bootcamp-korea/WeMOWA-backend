@@ -38,14 +38,14 @@ class SubCategory(models.Model):
 		db_table = 'sub_categories'
 
 class Image(models.Model):
-	img_url 	= model.CharField(max_length = 2000)
-	product 	= model.ForeignKey('Product', on_delete = models.SET_NULL, null = True, blank = True)
+	img_url 	= models.CharField(max_length = 2000)
+	product 	= models.ForeignKey('Product', on_delete = models.SET_NULL, null = True, blank = True)
 	
 	class Meta:
 		db_table = 'images'
 
 class Material(models.Model):
-	name 		= model.CharField(max_length = 50)
+	name 		= models.CharField(max_length = 50)
 
 	class Meta:
 		db_table = 'materials'
@@ -81,23 +81,23 @@ class ProductOption(models.Model):
 		db_table = 'products_options'
 
 class Tag(models.Model):
-	color 		= models.CharField(max_length = 50)
-	color_url 	= models.CharField(max_length = 2000)
-	text 		= models.CharField(max_length = 50, null = True)
+	color		= models.CharField(max_length = 50)
+	color_url	= models.CharField(max_length = 2000)
+	text		= models.CharField(max_length = 50, null = True)
 
 	class Meta:
 		db_table = 'tags'
 
 class Wheel(models.Model):
-	color 		= models.CharField(max_length = 50)
-        color_url 	= models.CharField(max_length = 2000)
+	color		= models.CharField(max_length = 50)
+	color_url	= models.CharField(max_length = 2000)
 
 	class Meta:
 		db_table = 'wheels'
 
 class Handle(models.Model):
-	color 		= models.CharField(max_length = 50)
-        color_url 	= models.CharField(max_length = 2000) 
+	color		= models.CharField(max_length = 50)
+	color_url	= models.CharField(max_length = 2000) 
 	
 	class Meta:
 		db_table = 'handles'
