@@ -38,7 +38,7 @@ class SubCategory(models.Model):
 		db_table = 'sub_categories'
 
 class Image(models.Model):
-	img_url 	= models.CharField(max_length = 2000)
+	img_url 	= models.URLField(max_length = 2000)
 	product 	= models.ForeignKey('Product', on_delete = models.SET_NULL, null = True, blank = True)
 	
 	class Meta:
@@ -52,7 +52,7 @@ class Material(models.Model):
 
 class LuggageColor(models.Model):
 	color 		= models.CharField(max_length = 50)
-	color_url 	= models.CharField(max_length = 1000)
+	color_url 	= models.URLField(max_length = 1000)
 	texture 	= models.ForeignKey('Texture', on_delete = models.SET_NULL, null = True)
 
 	class Meta:
@@ -82,7 +82,7 @@ class ProductOption(models.Model):
 
 class Tag(models.Model):
 	color		= models.CharField(max_length = 50)
-	color_url	= models.CharField(max_length = 2000)
+	color_url	= models.URLField(max_length = 2000)
 	text		= models.CharField(max_length = 50, null = True)
 
 	class Meta:
@@ -90,14 +90,14 @@ class Tag(models.Model):
 
 class Wheel(models.Model):
 	color		= models.CharField(max_length = 50)
-	color_url	= models.CharField(max_length = 2000)
+	color_url	= models.URLField(max_length = 2000)
 
 	class Meta:
 		db_table = 'wheels'
 
 class Handle(models.Model):
 	color		= models.CharField(max_length = 50)
-	color_url	= models.CharField(max_length = 2000) 
+	color_url	= models.URLField(max_length = 2000) 
 	
 	class Meta:
 		db_table = 'handles'
