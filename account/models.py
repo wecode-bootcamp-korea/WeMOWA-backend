@@ -17,31 +17,31 @@ class User(models.Model):
 		db_table = 'users'
 
 class Address(models.Model):
-	name		    = models.CharField(max_length = 50)
-	st_address		= models.CharField(max_length = 300)
-	op_address		= models.CharField(max_length = 500, null=True, blank = True)
-	city		    = models.CharField(max_length = 50)
-	zip_code	    = models.CharField(max_length = 50)
-	phone_number    = models.CharField(max_length = 50)
-    user            = models.ForeignKey('User',on_delete = models.SET_NULL, null=True)
+    name		    = models.CharField(max_length = 50)
+    st_address		= models.CharField(max_length = 300)
+    op_address		= models.CharField(max_length = 500, null=True, blank = True)
+    city		    = models.CharField(max_length = 50)
+    zip_code	    = models.CharField(max_length = 50)
+    phone_number    = models.CharField(max_length = 50)
+    user            = models.ForeignKey('User',on_delete = models.SET_NULL,null=True)
 
-	class Meta:
-		db_table = 'addresses'
+    class Meta:
+        db_table = 'addresses'
 
 class Prefix(models.Model):
-	name		= models.CharField(max_length = 50)
+    name        = models.CharField(max_length = 50)
 	
-	class Meta:
-		db_table = 'prefixs'
+    class Meta:
+        db_table = 'prefixs'
 
 
 class RegisteredLuggage(models.Model):
-	user			= models.ForeignKey('User', on_delete = models.SET_NULL, null = True)
-	serial_number	= models.CharField(max_length = 100)
-	purchase_date	= models.DateField()
+    user			= models.ForeignKey('User', on_delete = models.SET_NULL, null = True)
+    serial_number	= models.CharField(max_length = 100)
+    purchase_date	= models.DateField()
 
-	class Meta:
-		db_table = 'registered_luggages'
+    class Meta:
+        db_table = 'registered_luggages'
 
 class UserWishlist(models.Model):
 	user			= models.ForeignKey('User', on_delete = models.SET_NULL, null = True)
