@@ -1,7 +1,6 @@
 from django.db import models
-
-from account.models import *
-from product.models import *
+from account.models import User
+from product.models import  Product, Tag, Handle, Wheel
 
 class Order(models.Model):
 	user			= models.ForeignKey(User, on_delete = models.SET_NULL, null=True)
@@ -19,7 +18,6 @@ class OrderStatus(models.Model):
 	class Meta:
 		db_table	= 'orders_status'
 
-
 class Cart(models.Model):
 	order			= models.ForeignKey('Order', on_delete = models.SET_NULL, null= True)
 	product			= models.ForeignKey(Product, on_delete = models.SET_NULL, null = True)
@@ -30,6 +28,4 @@ class Cart(models.Model):
 	
 	class Meta:
 		db_table	= 'carts'
-
-
 
