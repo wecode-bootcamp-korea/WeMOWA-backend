@@ -31,7 +31,7 @@ class Category(models.Model):
 	class Meta:
 		db_table = 'categories'
 
-class SubCategory(models.Model):
+class Subcategory(models.Model):
 	name 		= models.CharField(max_length = 50)
 
 	class Meta:
