@@ -4,16 +4,18 @@ from django.db import models
 class Product(models.Model):
     name            = models.CharField(max_length = 50)
     price           = models.DecimalField(max_digits = 10, decimal_places = 2)
-    collection      = models.CharField(max_length = 50,null=True)
-    stock_status    = models.ForeignKey('StockStatus', on_delete = models.SET_NULL, null = True, blank = True)
-    category        = models.ForeignKey('Category', on_delete = models.SET_NULL, null = True, blank = True)
+    collection      = models.ForeignKey('Collection',on_delete = models.SET_NULL, null=True)
+    stock_status    = models.ForeignKey('StockStatus', on_delete = models.SET_NULL, null = True)
+    category        = models.ForeignKey('Category', on_delete = models.SET_NULL, null = True)
     description	    = models.CharField(max_length = 1000)
-    material        = models.ForeignKey('Material', on_delete = models.SET_NULL, null = True, blank = True)
-    luggage_color   = models.ManyToManyField('LuggageColor', through = 'ProductLuggageColor')
+    luggage_color   = models.CharField(max_length = 50, null=True)
     tag	            = models.ManyToManyField('Tag', through = 'ProductOption')
     handle          = models.ManyToManyField('Handle', through = 'ProductOption')
     wheel           = models.ManyToManyField('Wheel', through = 'ProductOption')
-
+    detail          = models.TextField(null = True)
+    product_number  = models.CharField(max_length = 50, null = True)
+    texture         = models.ForeignKey('Texture', on_delete = models.SET_NULL, null = True)
+    color_url       = models.URLField(max_length = 2000, null=True)
     class Meta:
         db_table = 'products'
 
@@ -29,6 +31,12 @@ class Category(models.Model):
     class Meta:
         db_table = 'categories'
 
+class Collection(models.Model):
+    name        = models.CharField(max_length = 50)
+
+    class Meta:
+        db_table = 'collections'
+
 class Image(models.Model):
     img_url 	= models.URLField(max_length = 2000)
     product 	= models.ForeignKey('Product', on_delete = models.SET_NULL, null = True, blank = True)
@@ -36,32 +44,11 @@ class Image(models.Model):
     class Meta:
         db_table = 'images'
 
-class Material(models.Model):
-    name        = models.CharField(max_length = 50, null = True)
-
-    class Meta:
-        db_table = 'materials'
-
-class LuggageColor(models.Model):
-    color       = models.CharField(max_length = 50)
-    color_url   = models.URLField(max_length = 1000)
-    texture     = models.ForeignKey('Texture', on_delete = models.SET_NULL, null = True)
-    
-    class Meta:
-        db_table = 'luggage_colors'
-
 class Texture(models.Model):
     name        = models.CharField(max_length = 50)
 
     class Meta:
         db_table = 'textures'
-
-class ProductLuggageColor(models.Model):
-    luggage_color   = models.ForeignKey('LuggageColor', on_delete = models.SET_NULL, null = True)
-    product         = models.ForeignKey('Product', on_delete = models.SET_NULL, null = True)
-    
-    class Meta:
-        db_table = 'products_luggage_colors'
 
 class ProductOption(models.Model):
     product     = models.ForeignKey('Product', on_delete = models.SET_NULL, null=True)
@@ -83,12 +70,13 @@ class Tag(models.Model):
 class Wheel(models.Model):
     color       = models.CharField(max_length = 50)
     color_url   = models.URLField(max_length = 2000)
+    
     class Meta:
         db_table = 'wheels'
 
 class Handle(models.Model):
     color       = models.CharField(max_length = 50)
-    color_url   = models.URLField(max_length = 2000) 
+    color_url   = models.URLField(max_length = 2000)
 
     class Meta:
         db_table = 'handles'
