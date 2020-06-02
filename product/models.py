@@ -16,6 +16,7 @@ class Product(models.Model):
     product_number  = models.CharField(max_length = 50, null = True)
     texture         = models.ForeignKey('Texture', on_delete = models.SET_NULL, null = True)
     color_url       = models.URLField(max_length = 2000, null=True)
+    
     class Meta:
         db_table = 'products'
 
@@ -45,7 +46,7 @@ class Image(models.Model):
         db_table = 'images'
 
 class Texture(models.Model):
-    name        = models.CharField(max_length = 50)
+    name        = models.CharField(max_length = 50,null=True)
 
     class Meta:
         db_table = 'textures'
@@ -55,28 +56,26 @@ class ProductOption(models.Model):
     tag         = models.ForeignKey('Tag', on_delete = models.SET_NULL, null = True)
     handle      = models.ForeignKey('Handle', on_delete = models.SET_NULL, null = True)
     wheel       = models.ForeignKey('Wheel', on_delete = models.SET_NULL, null = True)
-
+    tag_text    = models.CharField(max_length  = 50, null=True)
+    
     class Meta:
         db_table = 'products_options'
 
 class Tag(models.Model):
     color       = models.CharField(max_length = 50)
     color_url   = models.URLField(max_length = 2000)
-    text        = models.CharField(max_length = 50, null = True)
 
     class Meta:
         db_table = 'tags'
 
 class Wheel(models.Model):
     color       = models.CharField(max_length = 50)
-    color_url   = models.URLField(max_length = 2000)
     
     class Meta:
         db_table = 'wheels'
 
 class Handle(models.Model):
     color       = models.CharField(max_length = 50)
-    color_url   = models.URLField(max_length = 2000)
 
     class Meta:
         db_table = 'handles'

@@ -10,6 +10,7 @@ from product.models import  *
 
 CSV_PATH_PRODUCT = '../chromedriver/output.csv'
 
+
 with open(CSV_PATH_PRODUCT) as in_file:
     data_reader = csv.reader(in_file)
     next(data_reader,None)
@@ -30,6 +31,7 @@ with open(CSV_PATH_PRODUCT) as in_file:
 #            product_id = Product.objects.get(name = row[1]).id
 #            for img in images:
 #                Image.objects.create(img_url = img, product_id = product_id)
+
     for row in data_reader:
         if row:
             collection = row[0]
@@ -39,20 +41,23 @@ with open(CSV_PATH_PRODUCT) as in_file:
             stock_status_id = StockStatus.objects.get(name = stock).id
             description = row[4]
             category_id = Category.objects.get(id=1).id
-            #collection_id = Collection.objects.get(name = row[0]).id
+            collection_id = Collection.objects.get(name = row[0]).id
             detail = row[9]
             image_string = row[5][2:len(row[5])-2]
             images = image_string.split("', '")
-           # product_id = Product.objects.get(product_number = row[]).id
-            luggage_color = row[6]
-            color_url_string = row[7][1:len(row[7])-1]
-            color_urls = color_url_string.split(', ')
-            print(luggage_color)
+            luggage_color =row[6]
+           # color_url_string = row[7][1:len(row[7])-1]
+           # color_urls = color_url_string.split(', ')
+            color_urls = row[7]
+            color_url_eval = eval(color_urls)
+            a=color_url_eval[row[6]]
+            print(a)
 
-           # real_product = product_id.get(name=row[1])
-           # print(collection)
-           # print(product_id)
-            print("------------------------------------------------------")
-           # for img in images:
-           #     Image.objects.create(img_url = img, product_id = product_id)
-           # Product.objects.create(category_id=category_id,collection_id = collection_id,stock_status_id = stock_status_id,name=name, price = price, description = description,detail = detail )
+            #product_id = Product.objects.get(product_number = row[10]).id 
+            #try:
+            #    texture_id = Texture.objects.get(name = row[8].capitalize()).id
+            #except:
+            #    texture_id = None
+#            for img in images:
+#                Image.objects.create(img_url = img, product_id = product_id)
+#            Product.objects.create(category_id=category_id,collection_id = collection_id,stock_status_id = stock_status_id,name=name, price = price, description = description,detail = detail,texture_id = texture_id,color_url = color_url,luggage_color=luggage_color)
