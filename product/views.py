@@ -4,7 +4,6 @@ from django.views import View
 from .models import *
 from django.http import HttpResponse, JsonResponse
 
-
 class ProductListView(View):
     def get(self,request,category_id):
         sort = request.GET.get('sort',None)
@@ -69,3 +68,7 @@ class ProductListView(View):
             product_info['series_color'] = series_color
             result.append(product_info)
         return JsonResponse({'data':result}, status = 200)
+
+
+
+
