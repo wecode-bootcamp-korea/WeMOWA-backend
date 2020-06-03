@@ -61,3 +61,14 @@ with open(CSV_PATH_PRODUCT) as in_file:
 #            for img in images:
 #                Image.objects.create(img_url = img, product_id = product_id)
 #            Product.objects.create(category_id=category_id,collection_id = collection_id,stock_status_id = stock_status_id,name=name, price = price, description = description,detail = detail,texture_id = texture_id,color_url = color_url,luggage_color=luggage_color)
+    
+    for row in data_reader:
+        if row:
+            
+            product_id = Product.objects.get(product_number = row[10]).id
+            image_string = row[5][2:len(row[5])-2]
+            images = image_string.split("', '")
+
+            for img in images:
+                Image.objects.create(img_url = img, product_id = product_id)
+            
