@@ -69,14 +69,12 @@ class Tag(models.Model):
 
 class Wheel(models.Model):
     color       = models.CharField(max_length = 50)
-    color_url   = models.URLField(max_length = 2000)
 
     class Meta:
         db_table = 'wheels'
 
 class Handle(models.Model):
     color       = models.CharField(max_length = 50)
-    color_url   = models.URLField(max_length = 2000)
 
     class Meta:
         db_table = 'handles'
