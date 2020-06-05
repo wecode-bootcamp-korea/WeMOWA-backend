@@ -31,7 +31,6 @@ class ProductListView(View):
             for color in color_filter:
                 obj |= filtered_obj.filter(luggage_color__icontains = color.title())
             for product in obj:
-                print(product.luggage_color)
             filtered_obj = obj
         if price_filter:
             price_filter = price_filter.split('-')
@@ -42,7 +41,6 @@ class ProductListView(View):
             obj = Product.objects.none()
             for col in collection_filter:
                 obj |= filtered_obj.filter(collection_id = Collection.objects.get(name = col))
-            print("this is a collection filter!!!!!!!!!!!!!!!!!!",obj)
             filtered_obj = obj
         product_list = filtered_obj
         search = request.GET.get('search', None)
