@@ -30,6 +30,7 @@ class ProductListView(View):
             obj = Product.objects.none()
             for color in color_filter:
                 obj |= filtered_obj.filter(luggage_color__icontains = color.title())
+            for product in obj:
             filtered_obj = obj
         if price_filter:
             price_filter = price_filter.split('-')
@@ -40,7 +41,6 @@ class ProductListView(View):
             obj = Product.objects.none()
             for col in collection_filter:
                 obj |= filtered_obj.filter(collection_id = Collection.objects.get(name = col))
-            print(obj)
             filtered_obj = obj
         product_list = filtered_obj
         search = request.GET.get('search', None)
@@ -71,6 +71,7 @@ class ProductListView(View):
                 series_color.append(series_info)
             product_info['collection'] = collection
             product_info['name'] = name
+            product_info['product_id'] = product_id
             product_info['product_number'] = product_number
             product_info['price'] = price
             product_info['luggage_color'] = color
@@ -92,9 +93,11 @@ class ProductDetailView(View):
             for wish in wished_by:
                 if current_userid == wish.user_id:
                     is_wished = True
+        series_color = []
         series = Product.objects.filter(name = product.name, collection_id = product.collection.id)
         result = {}
         result['collection'] = product.collection.name
+        result['product_id'] = product.id
         result['name'] = product.name
         result['price'] = product.price
         result['stock_status'] = product.stock_status.name
