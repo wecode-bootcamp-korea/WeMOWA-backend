@@ -5,7 +5,7 @@ from django.views import View
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
 
-from .models import *
+from .models import Store
 
 class StoreListView(View):
     def get(self,request):
