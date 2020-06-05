@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.db import IntegrityError
 
 from my_settings import SECRET_KEY
-from .models import *
+from .models import User, Prefix, UserWishlist
 from .utils import login_decorator
 
 
