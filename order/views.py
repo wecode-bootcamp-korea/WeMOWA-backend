@@ -5,37 +5,46 @@ from django.http import HttpResponse, JsonResponse
 from .models import Cart, Order, OrderStatus
 from product.models import Product, ProductOption, Tag
 from account.utils import login_decorator
-    
+from account.models import User 
+from django.db.models import Q
 
 class CartView(View):
     @login_decorator
     def post(self,request):
-        data = json.loads(request.body)
         try:
-            cart_item =  Product.objects.select_related('category','collection','texture','stock_status').prefetch_related('tag','cart_set','cart_set__order').get(product_number = data['product_number'])
+            data = json.loads(request.body)
+            user = request.user
+            product_id = data['product_id']
+            tag = data['tag'].upper()
+            amount = data['amount']
+            tag_text = data['tag_text']
+            cart_item =  Product.objects.get(id = product_id)
             if "tag" in data:
                 ProductOption.objects.create(
-                    product_id  = cart_item.id,
-                    tag_id      = Tag.objects.get(color = data['tag']).id,
-                    tag_text    = data['tag_text']
+                    product_id  = product_id,
+                    tag         = Tag.objects.get(color = tag),
+                    tag_text    = tag_text
                 )
-            if Cart.objects.filter( product_id = data['product_id']).exists():
-                item = Cart.objects.get(product_id = data['product_id'])
+            
+            if not Order.objects.filter(user = user, order_status__name = 'pending').exists():
+                order_item  = Order.objects.create(
+                    user_id = user.id,
+                    order_status = OrderStatus.objects.get(name = "pending")
+                )
+            
+            if Cart.objects.filter( product_id = product_id).exists():
+                item = Cart.objects.get(product_id=product_id)
                 item.amount += 1
                 item.save()
-                return HttpResponse(status = 200)
+            
             else:
-                order_item = Order.objects.create(
-                    user_id = request.user.id,
-                    order_status_id = 1
-                )
                 Cart.objects.create(
-                product_id      = cart_item.id,
-                amount          = data['amount'],
-                tag_id          = Tag.objects.get(color = data['tag']).id,
-                order_id     = order_item.id
-                )
-                return HttpResponse( status = 200 )
+                    product         = cart_item,
+                    amount          = amount,
+                    tag             = Tag.objects.get(color = tag),
+                    order           = Order.objects.get(user = user, order_status__name ='pending')
+                    )
+            return HttpResponse( status = 200 )
 
         except KeyError:
             return JsonResponse({ 'message' : 'INVALID_KEYS' }, status = 400)
@@ -43,6 +52,8 @@ class CartView(View):
     @login_decorator
     def get(self,request):
         try:
+            user = request.user
+            items = Cart.objects.select_related('product','tag','order').filter(order__user = user)
             cart_list = [{
                 'id'                : item.id,
                 'collection_id'     : item.product.collection_id,
@@ -54,7 +65,7 @@ class CartView(View):
                 'image'             : item.product.image_set.all()[0].img_url,
                 'tag'               : item.product.tag.all()[0].color,
                 'tag_text'          : item.product.productoption_set.all()[0].tag_text
-            } for item in Cart.objects.select_related('product','tag').all()]
+            } for item in items]
             return JsonResponse({ 'data': cart_list } ,status = 200)
         
         except  KeyError:
@@ -64,8 +75,8 @@ class CartView(View):
     def patch(self,request):
         data = json.loads(request.body)
         try:
-            product = Product.objects.prefetch_related('cart_set').get(id = data['product_id'])
-            item    = Cart.objects.get(product_id = product.id)
+            user = request.user
+            item    = Cart.objects.get(order__user = user, product_id = data['product_id'])
             if item.amount >=  1:
                 if data['changed_amount'] == 'plus':
                     item.amount +=1
@@ -80,16 +91,32 @@ class CartView(View):
         except  KeyError:
             return JsonResponse({ 'message' : 'INVALID_KEYS' }, status = 400)
 
-
     @login_decorator
     def delete(self,request):
         data = json.loads(request.body)
         try:
-            item = Cart.objects.get(product_id = data['product_id'])
+            user = request.user
+            item = Cart.objects.get(order__user = user, product_id = data['product_id'])
             item.delete()
             return HttpResponse(status = 200)
         
         except  KeyError:
             return JsonResponse({ 'message' : 'INVALID_KEYS' }, status=400)
 
+class OrderView(View):
+    @login_decorator
+    def post(self,request):
+        data = json.loads(request.body)
+        user = request.user
+        try:
+            if data:
+                order = Order.objects.get(user = user, order_status_id = 1)
+                order.order_status_id = 2
+                order.save()
+                return HttpResponse(status = 200)
+            
+            return JsonResponse({ 'message' : 'INVALID_DATA' }, status = 400)
+        
+        except KeyError:
+             return JsonResponse({ 'message' : 'INVALID_KEY' }, status = 400)
 
