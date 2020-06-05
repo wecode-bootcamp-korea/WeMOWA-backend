@@ -30,7 +30,6 @@ class ProductListView(View):
             obj = Product.objects.none()
             for color in color_filter:
                 obj |= filtered_obj.filter(luggage_color__icontains = color.title())
-            for product in obj:
             filtered_obj = obj
         if price_filter:
             price_filter = price_filter.split('-')

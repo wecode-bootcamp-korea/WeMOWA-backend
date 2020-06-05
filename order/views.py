@@ -16,7 +16,7 @@ class CartView(View):
             data = json.loads(request.body)
             user = request.user
             product_id = data['product_id']
-            tag = data['tag'].upper()
+            tag = data['tag']
             amount = data['amount']
             tag_text = data['tag_text']
             cart_item =  Product.objects.get(id = product_id)
@@ -24,7 +24,7 @@ class CartView(View):
                 ProductOption.objects.create(
                     product_id  = product_id,
                     tag         = Tag.objects.get(color = tag),
-                    tag_text    = tag_text
+                    tag_text    = tag_text.upper()
                 )
             
             if not Order.objects.filter(user = user, order_status__name = 'pending').exists():
@@ -33,7 +33,7 @@ class CartView(View):
                     order_status = OrderStatus.objects.get(name = "pending")
                 )
             
-            if Cart.objects.filter( product_id = product_id).exists():
+            if Cart.objects.filter(order__user = user, product_id = product_id).exists():
                 item = Cart.objects.get(product_id=product_id)
                 item.amount += 1
                 item.save()
@@ -42,7 +42,7 @@ class CartView(View):
                 Cart.objects.create(
                     product         = cart_item,
                     amount          = amount,
-                    tag             = Tag.objects.get(color = tag),
+                    tag             = tag.upper(),
                     order           = Order.objects.get(user = user, order_status__name ='pending')
                     )
             return HttpResponse( status = 200 )
