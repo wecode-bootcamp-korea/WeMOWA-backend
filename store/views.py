@@ -1,9 +1,11 @@
-from django.shortcuts import render
 import json
+
+from django.shortcuts import render
 from django.views import View
-from .models import *
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
+
+from .models import *
 
 class StoreListView(View):
     def get(self,request):
