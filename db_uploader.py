@@ -8,12 +8,13 @@ django.setup()
 
 from product.models import  *
 
-CSV_PATH_PRODUCT = '../selenium/product1.csv'
+CSV_PATH_PRODUCT = '../selenium/product.csv'
 
 
 with open(CSV_PATH_PRODUCT) as in_file:
     data_reader = csv.reader(in_file)
-    next(data_reader,None) 
+    next(data_reader,None)
+#   악세사리 데이터 
     # for row in data_reader:
     #     if row:
             # stock = row[3]
@@ -25,12 +26,12 @@ with open(CSV_PATH_PRODUCT) as in_file:
             # collection_id = Collection.objects.get(name = row[0]).id
             # stock_status_id = StockStatus.objects.get(name = stock).id
             # Product.objects.create(category_id = category_id,collection_id = collection_id, name = name, price = price,stock_status_id = stock_status_id,description = description)
-        #    image = row[5][2:len(row[5])-2]
-        #    images=image.split("', '")
-        #    product_id = Product.objects.get(name = row[1]).id
-        #    for img in images:
-        #        Image.objects.create(img_url = img, product_id = product_id)
-    
+            # image = row[5][2:len(row[5])-2]
+            # images=image.split("', '")
+            # product_id = Product.objects.get(name = row[1]).id
+            # for img in images:
+            #     Image.objects.create(img_url = img, product_id = product_id)
+
     # for row in data_reader:
     #     if row:
     #         collection = row[0]
