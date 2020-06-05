@@ -1,10 +1,12 @@
 import json
+
 from django.shortcuts import render
 from django.views import View
-from .models import *
 from django.http import HttpResponse, JsonResponse
-from account.utils import login_decorator
 from django.db.models import Q
+
+from .models import *
+from account.utils import login_decorator
 
 class ProductListView(View):
     def get(self,request,category_id):
@@ -69,7 +71,6 @@ class ProductListView(View):
                 series_color.append(series_info)
             product_info['collection'] = collection
             product_info['name'] = name
-           # product_info['product_id'] = product_id
             product_info['product_number'] = product_number
             product_info['price'] = price
             product_info['luggage_color'] = color
@@ -91,7 +92,6 @@ class ProductDetailView(View):
             for wish in wished_by:
                 if current_userid == wish.user_id:
                     is_wished = True
-        series_color = []
         series = Product.objects.filter(name = product.name, collection_id = product.collection.id)
         result = {}
         result['collection'] = product.collection.name

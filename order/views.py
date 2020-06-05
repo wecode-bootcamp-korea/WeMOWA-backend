@@ -1,12 +1,13 @@
 import json
+
 from django.shortcuts import render
 from django.views import  View
 from django.http import HttpResponse, JsonResponse
+
 from .models import Cart, Order, OrderStatus
 from product.models import Product, ProductOption, Tag
 from account.utils import login_decorator
 from account.models import User 
-from django.db.models import Q
 
 class CartView(View):
     @login_decorator
