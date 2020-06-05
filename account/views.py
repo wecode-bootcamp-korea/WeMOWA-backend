@@ -63,8 +63,6 @@ class WishListView(View):
                         user_id = user.id,
                         product_id = product_id
                     )
-            else:
-                pass
             return HttpResponse(status = 200)
         except KeyError:
             return JsonResponse({'message':'INVALID_KEYS'}, status = 400)
@@ -83,8 +81,6 @@ class WishListView(View):
                     product_info['price'] = product.price
                     product_info['image'] = product.image_set.all()[0].img_url
                     result.append(product_info)
-            else:
-                pass
             return JsonResponse({'data':result},status = 200)
         except KeyError:
             return JsonResponse({'message':'INVALID_KEYS'}, status = 400)
