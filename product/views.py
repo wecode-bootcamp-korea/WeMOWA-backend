@@ -1,10 +1,12 @@
 import json
+
 from django.shortcuts import render
 from django.views import View
-from .models import *
 from django.http import HttpResponse, JsonResponse
-from account.utils import login_decorator
 from django.db.models import Q
+
+from .models import *
+from account.utils import login_decorator
 
 class ProductListView(View):
     def get(self,request,category_id):
@@ -60,6 +62,7 @@ class ProductListView(View):
             product_number = product.product_number
             product_id = product.id
             series_color = []
+
             for obj in Product.objects.filter(name = name, collection_id = product.collection.id):
                 series_info = {}
                 series_info['name'] = obj.luggage_color
