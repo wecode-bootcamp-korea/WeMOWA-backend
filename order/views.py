@@ -24,7 +24,7 @@ class CartView(View):
                 ProductOption.objects.create(
                     product_id  = product_id,
                     tag         = Tag.objects.get(color = tag),
-                    tag_text    = tag_text.upper()
+                    tag_text    = tag_text
                 )
             
             if not Order.objects.filter(user = user, order_status__name = 'pending').exists():
@@ -42,7 +42,7 @@ class CartView(View):
                 Cart.objects.create(
                     product         = cart_item,
                     amount          = amount,
-                    tag             = tag.upper(),
+                    tag             = Tag.objects.get(color = tag.upper()),
                     order           = Order.objects.get(user = user, order_status__name ='pending')
                     )
             return HttpResponse( status = 200 )
@@ -111,7 +111,7 @@ class OrderView(View):
         user = request.user
         try:
             if data:
-                order = Order.objects.get(user = user, order_status_id = 1)
+                order = Order.objects.get(user = user, order_status__name = 'pending')
                 order.order_status_id = 2
                 order.save()
                 return HttpResponse(status = 200)
