@@ -28,10 +28,13 @@ Rimowa의 캐리어 제품소개와 커스터마이징, 그리고 장바구니 �
 ### 적용기술
 - Python/Django
 - Selenium
+- BeautifulSoup
 - Bcrypt
 - Json
 - JWT/token
 - CORS Headers
+- MySQL
+- AWS EC2
 
 <br>
 
