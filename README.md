@@ -43,7 +43,7 @@ Rimowa의 캐리어 제품소개와 커스터마이징, 그리고 장바구니 �
 ### 기능 구현
 
 #### Account
-- Sign-in/Sign-up (Bcrypt 암호화 및 JWT Access Token 전송)
+- Sign-in/Sign-up (Bcrypt 암호화 및 JWT Access Token 전송)
 - 로그인 검증을 위한 login decorator 구현
 - 로그인 검증 후 wishlist(찜하기, 취소, 리스트보기)
 
