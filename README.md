@@ -4,7 +4,7 @@ Rimowa의 캐리어 제품소개와 커스터마이징, 그리고 장바구니 �
 <br>
 
 ## 개발 인원 및 기간
-- 기간: 12일(5월 25일 ~ 6월 5일)
+- 기간: 12일(5월 25일 ~ 6월 5일)
 - Back-end members : [HyerangKim](https://github.com/RainaKim), [MisunKim](https://github.com/misuning)
 
 <br>
