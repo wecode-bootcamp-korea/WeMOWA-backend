@@ -39,7 +39,7 @@ Rimowa의 캐리어 제품소개와 커스터마이징, 그리고 장바구니 �
 <br>
 
 ### Database ERD Modeling
-
+![kimmiseon/desktop/wemowa_modeling]
 ### 기능 구현
 
 #### Account
